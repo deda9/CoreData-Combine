@@ -1,2 +1,2 @@
-# CoreData-Combine
-Create CoreData byCombine
+# CoreDataExample
+Example for Core Data
