@@ -3,7 +3,7 @@ import CoreData
 
 struct CoreDataFetchResultsPublisher<Entity>: Publisher where Entity: NSManagedObject {
     typealias Output = [Entity]
-    typealias Failure = Error
+    typealias Failure = NSError
     
     private let request: NSFetchRequest<Entity>
     private let context: NSManagedObjectContext
@@ -42,7 +42,7 @@ extension CoreDataFetchResultsPublisher.Subscription: Subscription {
             let items = try context.fetch(request)
             demand += subscriber.receive(items)
         } catch {
-            subscriber.receive(completion: .failure(error))
+            subscriber.receive(completion: .failure(error as NSError))
         }
     }
 }

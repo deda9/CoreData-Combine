@@ -3,7 +3,7 @@ import CoreData
 
 struct CoreDataDeleteModelPublisher<Entity>: Publisher where Entity: NSManagedObject {
     typealias Output = NSBatchDeleteResult
-    typealias Failure = Error
+    typealias Failure = NSError
     
     private let request: NSFetchRequest<Entity>
     private let context: NSManagedObjectContext
@@ -52,7 +52,7 @@ extension CoreDataDeleteModelPublisher.Subscription: Subscription {
             }
             
         } catch {
-            subscriber.receive(completion: .failure(error))
+            subscriber.receive(completion: .failure(error as NSError))
         }
     }
 }

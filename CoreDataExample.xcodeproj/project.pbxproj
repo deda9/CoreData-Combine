@@ -11,7 +11,6 @@
 		8FEE5C9725658CF300472077 /* CoreDataExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEE5C9625658CF300472077 /* CoreDataExampleApp.swift */; };
 		8FEE5C9925658CF300472077 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEE5C9825658CF300472077 /* ContentView.swift */; };
 		8FEE5C9B25658CF400472077 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FEE5C9A25658CF400472077 /* Assets.xcassets */; };
-		8FEE5C9E25658CF400472077 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FEE5C9D25658CF400472077 /* Preview Assets.xcassets */; };
 		8FEE5CA325658CF400472077 /* CoreDataExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FEE5CA125658CF400472077 /* CoreDataExample.xcdatamodeld */; };
 		8FEE5CAE25658CF400472077 /* CoreDataExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEE5CAD25658CF400472077 /* CoreDataExampleTests.swift */; };
 		8FEE5CB925658CF400472077 /* CoreDataExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEE5CB825658CF400472077 /* CoreDataExampleUITests.swift */; };
@@ -43,7 +42,6 @@
 		8FEE5C9625658CF300472077 /* CoreDataExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataExampleApp.swift; sourceTree = "<group>"; };
 		8FEE5C9825658CF300472077 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8FEE5C9A25658CF400472077 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8FEE5C9D25658CF400472077 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8FEE5CA225658CF400472077 /* CoreDataExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataExample.xcdatamodel; sourceTree = "<group>"; };
 		8FEE5CA425658CF400472077 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FEE5CA925658CF400472077 /* CoreDataExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +80,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F8770192567018400636B0F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8FC08560256595E9000FBF9E /* CoreDataStore.swift */,
+				8FFD6D462566F030005F41C3 /* CoreDataFetchResultsPublisher.swift */,
+				8FFD6D4B2566F052005F41C3 /* CoreDataDeleteModelPublisher.swift */,
+				8FFD6D502566F70A005F41C3 /* CoreDataSaveModelPublisher.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		8FEE5C8A25658CF300472077 = {
 			isa = PBXGroup;
 			children = (
@@ -105,26 +114,14 @@
 		8FEE5C9525658CF300472077 /* CoreDataExample */ = {
 			isa = PBXGroup;
 			children = (
+				8F8770192567018400636B0F /* Source */,
 				8FEE5C9625658CF300472077 /* CoreDataExampleApp.swift */,
 				8FEE5C9825658CF300472077 /* ContentView.swift */,
 				8FEE5C9A25658CF400472077 /* Assets.xcassets */,
 				8FEE5CA425658CF400472077 /* Info.plist */,
 				8FEE5CA125658CF400472077 /* CoreDataExample.xcdatamodeld */,
-				8FEE5C9C25658CF400472077 /* Preview Content */,
-				8FC08560256595E9000FBF9E /* CoreDataStore.swift */,
-				8FFD6D462566F030005F41C3 /* CoreDataFetchResultsPublisher.swift */,
-				8FFD6D4B2566F052005F41C3 /* CoreDataDeleteModelPublisher.swift */,
-				8FFD6D502566F70A005F41C3 /* CoreDataSaveModelPublisher.swift */,
 			);
 			path = CoreDataExample;
-			sourceTree = "<group>";
-		};
-		8FEE5C9C25658CF400472077 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				8FEE5C9D25658CF400472077 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		8FEE5CAC25658CF400472077 /* CoreDataExampleTests */ = {
@@ -248,7 +245,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FEE5C9E25658CF400472077 /* Preview Assets.xcassets in Resources */,
 				8FEE5C9B25658CF400472077 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,7 +434,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"CoreDataExample/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CoreDataExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -459,7 +454,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"CoreDataExample/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CoreDataExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

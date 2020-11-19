@@ -5,7 +5,7 @@ typealias Action = (()->())
 
 struct CoreDataSaveModelPublisher: Publisher {
     typealias Output = Bool
-    typealias Failure = Error
+    typealias Failure = NSError
     
     private let action: Action
     private let context: NSManagedObjectContext
@@ -46,7 +46,7 @@ extension CoreDataSaveModelPublisher.Subscription: Subscription {
             try context.save()
             demand += subscriber.receive(true)
         } catch {
-            subscriber.receive(completion: .failure(error))
+            subscriber.receive(completion: .failure(error as NSError))
         }
     }
 }

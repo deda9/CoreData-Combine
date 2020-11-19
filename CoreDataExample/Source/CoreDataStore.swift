@@ -21,81 +21,6 @@ extension EntityCreating {
     }
 }
 
-protocol EntitySaving {
-    var viewContext: NSManagedObjectContext { get }
-    func save()
-    func saveSync()
-}
-
-extension EntitySaving {
-    func save() {
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            print("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-}
-
-extension EntitySaving {
-    func saveSync() {
-        let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        privateContext.parent = viewContext
-        privateContext.perform {
-            do {
-                try privateContext.save()
-                viewContext.performAndWait {
-                    do  {
-                        try viewContext.save()
-                    } catch {
-                        let nsError = error as NSError
-                        print("Unresolved error \(nsError), \(nsError.userInfo)")
-                    }
-                }
-            } catch {
-                let nsError = error as NSError
-                print("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-}
-
-protocol EntityFetching {
-    var viewContext: NSManagedObjectContext { get }
-    
-    func fectch<T: NSManagedObject>(predicate: NSPredicate?,
-                                    sortDescriptors: [NSSortDescriptor]?,
-                                    limit: Int?,
-                                    batchSize: Int?) -> [T]
-}
-
-extension EntityFetching {
-    func fectch<T: NSManagedObject>(predicate: NSPredicate? = nil,
-                                    sortDescriptors: [NSSortDescriptor]? = nil,
-                                    limit: Int? = nil,
-                                    batchSize: Int? = nil) -> [T] {
-        let request = NSFetchRequest<T>(entityName: T.entityName)
-        request.predicate = predicate
-        request.sortDescriptors = sortDescriptors
-        
-        if let limit = limit, limit > 0 {
-            request.fetchLimit = limit
-        }
-        
-        if let batchSize = batchSize, batchSize > 0 {
-            request.fetchBatchSize = batchSize
-        }
-        
-        do {
-            let items = try viewContext.fetch(request)
-            return items
-        } catch {
-            fatalError("Couldnt fetch the enities for \(T.entityName) " + error.localizedDescription)
-        }
-    }
-}
-
 protocol CoreDataFetchResultsPublishing {
     var viewContext: NSManagedObjectContext { get }
     func publicher<T: NSManagedObject>(fetch request: NSFetchRequest<T>) -> CoreDataFetchResultsPublisher<T>
@@ -129,11 +54,9 @@ extension CoreDataSaveModelPublishing {
     }
 }
 
-protocol CoreDataStoring: EntityCreating, EntitySaving, EntityFetching, CoreDataFetchResultsPublishing, CoreDataDeleteModelPublishing, CoreDataSaveModelPublishing {
+protocol CoreDataStoring: EntityCreating, CoreDataFetchResultsPublishing, CoreDataDeleteModelPublishing, CoreDataSaveModelPublishing {
     var viewContext: NSManagedObjectContext { get }
-    func save()
 }
-
 
 class CoreDataStore: CoreDataStoring {
     
