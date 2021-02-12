@@ -62,7 +62,8 @@ private func fetchPersons() {
 ## Delete
 ```Swift
   private func deleteAllPersons() {
-        let request = NSFetchRequest<Person>(entityName: Person.entityName)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: Person.entityName)
+        request.predicate = NSPredicate(format: "first_name LIKE[cd] %@", "Deda")
         coreDataStore
             .publicher(delete: request)
             .sink { completion in
