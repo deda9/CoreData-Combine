@@ -25,7 +25,7 @@ struct ContentView: View {
         }.padding()
         
         Button(action: deleteAllPersons) {
-            Text("Delte All Persons")
+            Text("Delete All Persons")
         }.padding()
         
     }
@@ -33,7 +33,7 @@ struct ContentView: View {
     private func addPerson() {
         let action: Action = {
             let bezo: Person = coreDataStore.createEntity()
-            bezo.first_name = "Bezo"
+            bezo.first_name = "Deda"
             bezo.last_name = "Deda"
             
             let volksCar: Car = coreDataStore.createEntity()
@@ -78,7 +78,8 @@ struct ContentView: View {
     }
     
     private func deleteAllPersons() {
-        let request = NSFetchRequest<Person>(entityName: Person.entityName)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: Person.entityName)
+        request.predicate = NSPredicate(format: "first_name LIKE[cd] %@", "Deda")
         coreDataStore
             .publicher(delete: request)
             .sink { completion in

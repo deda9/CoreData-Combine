@@ -1,14 +1,14 @@
 import Combine
 import CoreData
 
-struct CoreDataDeleteModelPublisher<Entity>: Publisher where Entity: NSManagedObject {
+struct CoreDataDeleteModelPublisher: Publisher {
     typealias Output = NSBatchDeleteResult
     typealias Failure = NSError
     
-    private let request: NSFetchRequest<Entity>
+    private let request: NSFetchRequest<NSFetchRequestResult>
     private let context: NSManagedObjectContext
     
-    init(delete request: NSFetchRequest<Entity>, context: NSManagedObjectContext) {
+    init(delete request: NSFetchRequest<NSFetchRequestResult>, context: NSManagedObjectContext) {
         self.request = request
         self.context = context
     }
@@ -22,10 +22,10 @@ struct CoreDataDeleteModelPublisher<Entity>: Publisher where Entity: NSManagedOb
 extension CoreDataDeleteModelPublisher {
     class Subscription<S> where S : Subscriber, Failure == S.Failure, Output == S.Input {
         private var subscriber: S?
-        private let request: NSFetchRequest<Entity>
+        private let request: NSFetchRequest<NSFetchRequestResult>
         private var context: NSManagedObjectContext
         
-        init(subscriber: S, context: NSManagedObjectContext, request: NSFetchRequest<Entity>) {
+        init(subscriber: S, context: NSManagedObjectContext, request: NSFetchRequest<NSFetchRequestResult>) {
             self.subscriber = subscriber
             self.context = context
             self.request = request
@@ -33,15 +33,14 @@ extension CoreDataDeleteModelPublisher {
     }
 }
 
-extension CoreDataDeleteModelPublisher.Subscription: Subscription {
+extension CoreDataDeleteModelPublisher.Subscription: Subscription  {
     func request(_ demand: Subscribers.Demand) {
         var demand = demand
         guard let subscriber = subscriber, demand > 0 else { return }
         
         do {
             demand -= 1
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: Entity.entityName)
-            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: self.request)
             batchDeleteRequest.resultType = .resultTypeCount
             
             if let result = try context.execute(batchDeleteRequest) as? NSBatchDeleteResult {

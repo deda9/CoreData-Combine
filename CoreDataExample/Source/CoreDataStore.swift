@@ -34,11 +34,11 @@ extension CoreDataFetchResultsPublishing {
 
 protocol CoreDataDeleteModelPublishing {
     var viewContext: NSManagedObjectContext { get }
-    func publicher<T: NSManagedObject>(delete request: NSFetchRequest<T>) -> CoreDataDeleteModelPublisher<T>
+    func publicher(delete request: NSFetchRequest<NSFetchRequestResult>) -> CoreDataDeleteModelPublisher
 }
 
 extension CoreDataDeleteModelPublishing {
-    func publicher<T: NSManagedObject>(delete request: NSFetchRequest<T>) -> CoreDataDeleteModelPublisher<T> {
+    func publicher(delete request: NSFetchRequest<NSFetchRequestResult>) -> CoreDataDeleteModelPublisher {
         return CoreDataDeleteModelPublisher(delete: request, context: viewContext)
     }
 }
